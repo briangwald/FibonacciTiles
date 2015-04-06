@@ -1,0 +1,21 @@
+#ifndef LOSESTATE_H
+#define LOSESTATE_H
+
+#include "GameState.h"
+#include <SDL.h>
+
+class LoseState : public GameState
+{
+public:
+
+	void HandleInput();
+
+	void RunState();
+
+private:
+
+	SDL_Event event;
+
+};
+
+#endif
