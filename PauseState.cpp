@@ -19,6 +19,8 @@ void PauseState::HandleInput()
 		}
 		if (event.type == SDL_KEYDOWN)
 		{
+			//Pressing R will clear the grid and add two random Squares,
+			//effectively restarting the game
 			if (event.key.keysym.sym == SDLK_r)
 			{
 				gameStates->pop();
@@ -28,6 +30,7 @@ void PauseState::HandleInput()
 
 				return;
 			}
+			//Pressing M will bring you back to the menu state
 			if (event.key.keysym.sym == SDLK_m)
 			{
 				gameStates->pop();
@@ -42,6 +45,11 @@ void PauseState::HandleInput()
 				gameStates->push(menu);
 				return;
 			}
+			//Pressing C will return you to the game
+			if (event.key.keysym.sym == SDLK_c)
+			{
+				gameStates->pop();
+			}
 		}
 	}
 }
@@ -53,8 +61,10 @@ void PauseState::RunState()
 
 		TheGame::Instance()->ClearScreen();
 
-		TheGame::Instance()->DisplayText("Restart? (R)", 100, 120, 12, 255, 255, 255, 0, 0, 0);
-		TheGame::Instance()->DisplayText("Main Menu? (M)", 100, 140, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::Instance()->DisplayText("Press (R) to Restart Game", 100, 120, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::Instance()->DisplayText("Press (M) to Return to Main Menu", 100, 140, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::Instance()->DisplayText("Press (C) to Cancel", 100, 160, 12, 255, 255, 255, 0, 0, 0);
+
 
 		SDL_UpdateWindowSurface(TheGame::Instance()->GetWindow());
 

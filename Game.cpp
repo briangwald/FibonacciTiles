@@ -41,6 +41,7 @@ Game::Game()
 
 Game::~Game()
 {
+	//Deallocate memory allocated for each Square object
 	for (int row = 0; row < GRID_ROWS; row++)
 	{
 		for (int cell = 0; cell < CELLS_PER_ROW; cell++)
@@ -50,6 +51,7 @@ Game::~Game()
 	}
 }
 
+//Initialize SDL functionality, window, assets, and game state vector
 void Game::Init()
 {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
@@ -77,11 +79,9 @@ void Game::Init()
 	TTF_Init();
 }
 
+//Quits SDL Utilities
 void Game::Shutdown()
 {
-	//TODO: Destroy objects on heap
-
-	//Quit SDL Utilities
 	TTF_Quit();
 
 	SDL_DestroyWindow(window);
@@ -90,15 +90,7 @@ void Game::Shutdown()
 
 }
 
-void Game::DrawBackground()
-{
-	
-
-	//TODO: Set Background image
-
-	
-}
-
+//Clears the window to black
 void Game::ClearScreen()
 {
 	SDL_FillRect(screenSurface, 0, 0);
@@ -122,18 +114,20 @@ void Game::DisplayText(string text, int x, int y, int size, int fR, int fG, int 
 	TTF_CloseFont(font);
 }
 
+//Helper function for isFibonacci to test for perfect squares
 bool isPerfectSquare(int num)
 {
 	int temp = sqrt(num);
 	return temp*temp == num;
 }
 
+//Tests a number to see if it's a valid Fibonacci number. 
 bool isFibonacci(int num)
 {
 	return (isPerfectSquare(5 * (num*num) + 4) || isPerfectSquare(5 * (num*num) - 4));
 }
 
-
+//Test for possible valid moves
 bool Game::CanMove()
 {
 	//Check for horizontal moves. Return early if a possible move is found
@@ -149,7 +143,7 @@ bool Game::CanMove()
 			}
 		}
 	}
-
+	//Check for vertical moves. Return early if a possible move is found
 	for (int col = 0; col < GRID_COLS; col++)
 	{
 		for (int cell = 0; cell < CELLS_PER_ROW - 1; cell++)
@@ -219,7 +213,7 @@ void Game::Move(Direction dir)
 					successfullyMoved = true;
 
 				}
-				//If current 0 is nonzero, we only need to check for the next
+				//If current cell is nonzero, we only need to check for the next
 				//nonzero number
 				else
 				{
@@ -250,8 +244,6 @@ void Game::Move(Direction dir)
 		break;
 
 	case DOWN:
-
-		cout << "After DOWN shift:" << endl;
 
 		for (int col = 0; col < GRID_COLS; col++)
 		{
@@ -298,7 +290,7 @@ void Game::Move(Direction dir)
 					successfullyMoved = true;
 
 				}
-				//If current 0 is nonzero, we only need to check for the next
+				//If current cell is nonzero, we only need to check for the next
 				//nonzero number
 				else
 				{
@@ -330,8 +322,6 @@ void Game::Move(Direction dir)
 
 	case LEFT:
 
-		cout << "After LEFT shift:" << endl;
-
 		for (int row = 0; row < GRID_ROWS; row++)
 		{
 			for (int cell = 0; cell < CELLS_PER_ROW - 1; cell++)
@@ -339,25 +329,32 @@ void Game::Move(Direction dir)
 
 				int combinedVals = 0;
 
+				//If current cell is 0, we need to check the next two nonzero numbers
 				if (grid[row][cell]->GetValue() == 0)
 				{
 					int compCell = cell + 1;
 
+					//Find the first nonzero number down the row
 					while (grid[row][compCell]->GetValue() == 0)
 					{
 						if (compCell < CELLS_PER_ROW - 1) compCell++;
 						else break;
 					}
 
+					//Store the number and set its location to 0
 					combinedVals += grid[row][compCell]->GetValue();
 					grid[row][compCell]->SetValue(0);
 
+					//Find the next nonzero number down the row
 					while (grid[row][compCell]->GetValue() == 0)
 					{
 						if (compCell < CELLS_PER_ROW - 1) compCell++;
 						else break;
 					}
 
+					//Check if the two numbers combine to form a fibonacci number.
+					//If they do, store the result and set this number's former location to
+					//zero
 					if (isFibonacci(combinedVals + grid[row][compCell]->GetValue()))
 					{
 						combinedVals += grid[row][compCell]->GetValue();
@@ -369,10 +366,14 @@ void Game::Move(Direction dir)
 					successfullyMoved = true;
 
 				}
+
+				//If current cell is nonzero, we only need to check for the next
+				//nonzero number
 				else
 				{
 					int compCell = cell + 1;
 
+					//Find the next nonzero number down the row
 					while (grid[row][compCell]->GetValue() == 0)
 					{
 						if (compCell < CELLS_PER_ROW - 1) compCell++;
@@ -381,6 +382,8 @@ void Game::Move(Direction dir)
 
 					combinedVals += grid[row][compCell]->GetValue();
 
+					//If both add up to a fibonacci number, set the current cell
+					//to this number and the other to 0. If they do not, do nothing
 					if (isFibonacci(combinedVals + grid[row][cell]->GetValue()))
 					{
 						combinedVals += grid[row][cell]->GetValue();
@@ -403,25 +406,33 @@ void Game::Move(Direction dir)
 			for (int cell = CELLS_PER_ROW - 1; cell > 0; cell--)
 			{
 				int combinedVals = 0;
+
+				//If current cell is 0, we need to check the next two nonzero numbers
 				if (grid[row][cell]->GetValue() == 0)
 				{
 					int compCell = cell - 1;
 
+					//Find the first nonzero number down the column
 					while (grid[row][compCell]->GetValue() == 0)
 					{
 						if (compCell > 0) compCell--;
 						else break;
 					}
 
+					//Store the number and set its location to 0
 					combinedVals += grid[row][compCell]->GetValue();
 					grid[row][compCell]->SetValue(0);
 
+					//Find the next nonzero number down the column
 					while (grid[row][compCell]->GetValue() == 0)
 					{
 						if (compCell > 0) compCell--;
 						else break;
 					}
 
+					//Check if the two numbers combine to form a fibonacci number.
+					//If they do, store the result and set this number's former location to
+					//zero
 					if (isFibonacci(combinedVals + grid[row][compCell]->GetValue()))
 					{
 						combinedVals += grid[row][compCell]->GetValue();
@@ -433,10 +444,14 @@ void Game::Move(Direction dir)
 					successfullyMoved = true;
 
 				}
+
+				//If current cell is nonzero, we only need to check for the next
+				//nonzero number
 				else
 				{
 					int compCell = cell - 1;
 
+					//Find the next nonzero number down the row
 					while (grid[row][compCell]->GetValue() == 0)
 					{
 						if (compCell > 0) compCell--;
@@ -445,6 +460,8 @@ void Game::Move(Direction dir)
 
 					combinedVals += grid[row][compCell]->GetValue();
 
+					//If both add up to a fibonacci number, set the current cell
+					//to this number and the other to 0. If they do not, do nothing
 					if (isFibonacci(combinedVals + grid[row][cell]->GetValue()))
 					{
 						combinedVals += grid[row][cell]->GetValue();
@@ -459,18 +476,18 @@ void Game::Move(Direction dir)
 		break;
 	}
 
+	//Only add an additional square to the grid once a valid move is made
 	if (successfullyMoved)
 	{
 		AddRandomSquare();
 	}
 }
 
-//Purpose: To add either a 1 or a 2 to a random grid cell after each move
+//Adds either a 1 or a 2 to a random grid cell after each move
 void Game::AddRandomSquare()
 {
 	srand(time(0));
 
-	//Pick a random number, either a 1 or 2
 	int randVal = (rand() % 2) + 1;
 	
 	int randRow;
@@ -488,6 +505,7 @@ void Game::AddRandomSquare()
 	
 }
 
+//Draw each square on the grid
 void Game::DrawGrid()
 {
 	for (int row = 0; row < GRID_ROWS; row++)
@@ -499,6 +517,7 @@ void Game::DrawGrid()
 	}
 }
 
+//Remove all squares from the grid by setting each val to 0
 void Game::ClearGrid()
 {
 	for (int row = 0; row < GRID_ROWS; row++)

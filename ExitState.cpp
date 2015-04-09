@@ -8,6 +8,7 @@ void ExitState::HandleInput()
 	{
 		stack<GameState*>* gameStates = TheGame::Instance()->GetGameStates();
 
+		//Pressing X on the window will exit the game entirely
 		if (event.type == SDL_QUIT)
 		{
 			while (!gameStates->empty())
@@ -20,14 +21,15 @@ void ExitState::HandleInput()
 		{
 			switch (event.key.keysym.sym)
 			{
+			//Pressing Esc will exit the game
 			case SDLK_ESCAPE:
 				gameStates->pop();
 				break;
-
+			//Pressing Y will exit game
 			case SDLK_y:
 				gameStates->pop();
 				break;
-
+			//Pressing N will bring you back to the menu
 			case SDLK_n:
 				MenuState* menu = new MenuState;
 				gameStates->push(menu);

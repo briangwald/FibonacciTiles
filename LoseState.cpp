@@ -19,11 +19,13 @@ void LoseState::HandleInput()
 		}
 		if (event.type == SDL_KEYDOWN)
 		{
+			//Pressing Esc or Y will bring up the Exit menu/state
 			if (event.key.keysym.sym == SDLK_ESCAPE || event.key.keysym.sym == SDLK_y)
 			{
 				gameStates->pop();
 				return;
 			}
+			//Pressing N will return you to the main menu/state
 			if (event.key.keysym.sym == SDLK_n)
 			{
 				gameStates->pop();

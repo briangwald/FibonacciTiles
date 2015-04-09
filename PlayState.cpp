@@ -23,8 +23,8 @@ void PlayState::HandleInput()
 		{
 			switch (event.key.keysym.sym)
 			{
-				
-
+				//Move the grid's Squares in the direction corresponding to 
+				//whichever arrow key is pressed
 				case SDLK_UP:
 					TheGame::Instance()->Move(UP);
 					break;
@@ -40,7 +40,7 @@ void PlayState::HandleInput()
 				case SDLK_RIGHT:
 					TheGame::Instance()->Move(RIGHT);
 					break;
-
+				//Pressing escape brings up the Pause menu (state)
 				case SDLK_ESCAPE:
 					PauseState* pause = new PauseState;
 					gameStates->push(pause);

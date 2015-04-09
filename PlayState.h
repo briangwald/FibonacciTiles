@@ -4,6 +4,7 @@
 #include "GameState.h"
 #include <SDL.h>
 
+//The "Gameplay" state where the actual game runs
 class PlayState : public GameState
 {
 public:

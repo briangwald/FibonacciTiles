@@ -5,6 +5,7 @@ int main(int argc, char** argv)
 {
 	TheGame::Instance()->Init();
 
+	//Game loop
 	while (!TheGame::Instance()->GetGameStates()->empty())
 	{
 

@@ -1,6 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+//Interface for the game states
 class GameState
 {
 public:

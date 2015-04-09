@@ -8,6 +8,7 @@
 #define CELLS_PER_ROW (4)
 #define CELLS_PER_COL (4)
 
+//The objects that are stored within Game's 2d vector, grid.
 class Square
 {
 public:
@@ -21,11 +22,15 @@ public:
 
 private:
 
+	//X position on the screen
 	int topLeftX;
+
+	//Y position on the screen
 	int topLeftY;
 
+	//Fibonacci number represented by the Square
 	int value;
 
-	SDL_Surface image;
+
 };
 #endif
