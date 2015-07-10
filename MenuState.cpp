@@ -2,11 +2,11 @@
 #include "PlayState.h"
 #include "Game.h"
 
-void MenuState::HandleInput()
+void MenuState::handleInput()
 {
 	if (SDL_PollEvent(&event))
 	{
-		stack<GameState*>* gameStates = TheGame::Instance()->GetGameStates();
+		stack<GameState*>* gameStates = TheGame::getInstance()->getGameStates();
 
 		if (event.type == SDL_QUIT)
 		{
@@ -32,8 +32,8 @@ void MenuState::HandleInput()
 			case SDLK_g:
 				gameStates->pop();
 
-				TheGame::Instance()->AddRandomSquare();
-				TheGame::Instance()->AddRandomSquare();
+				TheGame::getInstance()->addRandomSquare();
+				TheGame::getInstance()->addRandomSquare();
 
 				PlayState* play = new PlayState;
 				gameStates->push(play);
@@ -44,19 +44,19 @@ void MenuState::HandleInput()
 	}
 }
 
-void MenuState::RunState()
+void MenuState::runState()
 {
-	if (SDL_GetTicks() - TheGame::Instance()->GetTimer() >= FRAME_RATE)
+	if (SDL_GetTicks() - TheGame::getInstance()->getTimer() >= FRAME_RATE)
 	{
-		HandleInput();
+		handleInput();
 
-		TheGame::Instance()->ClearScreen();
+		TheGame::getInstance()->clearScreen();
 
-		TheGame::Instance()->DisplayText("Start (G)ame", 175, 150, 12, 255, 255, 255, 0, 0, 0);
-		TheGame::Instance()->DisplayText("(Q)uit Game", 175, 200, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::getInstance()->displayText("Start (G)ame", 175, 150, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::getInstance()->displayText("(Q)uit Game", 175, 200, 12, 255, 255, 255, 0, 0, 0);
 
-		SDL_UpdateWindowSurface(TheGame::Instance()->GetWindow());
+		SDL_UpdateWindowSurface(TheGame::getInstance()->getWindow());
 
-		TheGame::Instance()->SetTimer(SDL_GetTicks());
+		TheGame::getInstance()->setTimer(SDL_GetTicks());
 	}
 }

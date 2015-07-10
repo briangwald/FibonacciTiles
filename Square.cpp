@@ -12,7 +12,7 @@ value(value)
 {
 }
 
-void Square::Draw(SDL_Surface* screenSurface, SDL_Surface* spriteSheet)
+void Square::draw(SDL_Surface* screenSurface, SDL_Surface* spriteSheet)
 {
 	SDL_Rect source;
 

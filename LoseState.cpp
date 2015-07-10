@@ -3,11 +3,11 @@
 #include "MenuState.h"
 #include "Game.h"
 
-void LoseState::HandleInput()
+void LoseState::handleInput()
 {
 	if (SDL_PollEvent(&event))
 	{
-		stack<GameState*>* gameStates = TheGame::Instance()->GetGameStates();
+		stack<GameState*>* gameStates = TheGame::getInstance()->getGameStates();
 
 		if (event.type == SDL_QUIT)
 		{
@@ -41,20 +41,20 @@ void LoseState::HandleInput()
 	}
 }
 
-void LoseState::RunState()
+void LoseState::runState()
 {
-	if (SDL_GetTicks() - TheGame::Instance()->GetTimer() >= FRAME_RATE)
+	if (SDL_GetTicks() - TheGame::getInstance()->getTimer() >= FRAME_RATE)
 	{
 
-		TheGame::Instance()->ClearScreen();
+		TheGame::getInstance()->clearScreen();
 
-		TheGame::Instance()->DisplayText("Game Over!", 100, 120, 12, 255, 255, 255, 0, 0, 0);
-		TheGame::Instance()->DisplayText("Quit Game (Y or N)?", 100, 140, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::getInstance()->displayText("Game Over!", 100, 120, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::getInstance()->displayText("Quit Game (Y or N)?", 100, 140, 12, 255, 255, 255, 0, 0, 0);
 
-		SDL_UpdateWindowSurface(TheGame::Instance()->GetWindow());
+		SDL_UpdateWindowSurface(TheGame::getInstance()->getWindow());
 
-		TheGame::Instance()->SetTimer(SDL_GetTicks());
+		TheGame::getInstance()->setTimer(SDL_GetTicks());
 
-		HandleInput();
+		handleInput();
 	}
 }

@@ -15,10 +15,10 @@ public:
 
 	Square(int topLeftX, int topLeftY, int value);
 
-	void Draw(SDL_Surface* screenSurface, SDL_Surface* spriteSheet);
+	void draw(SDL_Surface* screenSurface, SDL_Surface* spriteSheet);
 
-	int GetValue() { return value; }
-	void SetValue(int val) { value = val; }
+	int getValue() { return value; }
+	void setValue(int val) { value = val; }
 
 private:
 

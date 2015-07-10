@@ -2,11 +2,11 @@
 #include "MenuState.h"
 #include "Game.h"
 
-void ExitState::HandleInput()
+void ExitState::handleInput()
 {
 	if (SDL_PollEvent(&event))
 	{
-		stack<GameState*>* gameStates = TheGame::Instance()->GetGameStates();
+		stack<GameState*>* gameStates = TheGame::getInstance()->getGameStates();
 
 		//Pressing X on the window will exit the game entirely
 		if (event.type == SDL_QUIT)
@@ -39,18 +39,18 @@ void ExitState::HandleInput()
 	}
 }
 
-void ExitState::RunState()
+void ExitState::runState()
 {
-	if (SDL_GetTicks() - TheGame::Instance()->GetTimer() >= FRAME_RATE)
+	if (SDL_GetTicks() - TheGame::getInstance()->getTimer() >= FRAME_RATE)
 	{
-		HandleInput();
+		handleInput();
 
-		TheGame::Instance()->ClearScreen();
+		TheGame::getInstance()->clearScreen();
 
-		TheGame::Instance()->DisplayText("Quit Game (Y or N)?", 150, 150, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::getInstance()->displayText("Quit Game (Y or N)?", 150, 150, 12, 255, 255, 255, 0, 0, 0);
 
-		SDL_UpdateWindowSurface(TheGame::Instance()->GetWindow());
+		SDL_UpdateWindowSurface(TheGame::getInstance()->getWindow());
 
-		TheGame::Instance()->SetTimer(SDL_GetTicks());
+		TheGame::getInstance()->setTimer(SDL_GetTicks());
 	}
 }

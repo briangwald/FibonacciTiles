@@ -3,16 +3,16 @@
 
 int main(int argc, char** argv)
 {
-	TheGame::Instance()->Init();
+	TheGame::getInstance()->init();
 
 	//Game loop
-	while (!TheGame::Instance()->GetGameStates()->empty())
+	while (!TheGame::getInstance()->getGameStates()->empty())
 	{
 
-		TheGame::Instance()->GetGameStates()->top()->RunState();
+		TheGame::getInstance()->getGameStates()->top()->runState();
 	}
 
-	TheGame::Instance()->Shutdown();
+	TheGame::getInstance()->shutdown();
 
 	return 0;
 }

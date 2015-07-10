@@ -6,9 +6,9 @@ class GameState
 {
 public:
 
-	virtual void HandleInput() = 0;
+	virtual void handleInput() = 0;
 
-	virtual void RunState() = 0;
+	virtual void runState() = 0;
 };
 
 #endif

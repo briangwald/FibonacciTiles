@@ -3,11 +3,11 @@
 #include "MenuState.h"
 #include "Game.h"
 
-void PauseState::HandleInput()
+void PauseState::handleInput()
 {
 	if (SDL_PollEvent(&event))
 	{
-		stack<GameState*>* gameStates = TheGame::Instance()->GetGameStates();
+		stack<GameState*>* gameStates = TheGame::getInstance()->getGameStates();
 
 		if (event.type == SDL_QUIT)
 		{
@@ -24,9 +24,9 @@ void PauseState::HandleInput()
 			if (event.key.keysym.sym == SDLK_r)
 			{
 				gameStates->pop();
-				TheGame::Instance()->ClearGrid();
-				TheGame::Instance()->AddRandomSquare();
-				TheGame::Instance()->AddRandomSquare();
+				TheGame::getInstance()->clearGrid();
+				TheGame::getInstance()->addRandomSquare();
+				TheGame::getInstance()->addRandomSquare();
 
 				return;
 			}
@@ -36,7 +36,7 @@ void PauseState::HandleInput()
 				gameStates->pop();
 				gameStates->pop();
 
-				TheGame::Instance()->ClearGrid();
+				TheGame::getInstance()->clearGrid();
 
 				ExitState* exit = new ExitState;
 				gameStates->push(exit);
@@ -54,22 +54,22 @@ void PauseState::HandleInput()
 	}
 }
 
-void PauseState::RunState()
+void PauseState::runState()
 {
-	if (SDL_GetTicks() - TheGame::Instance()->GetTimer() >= FRAME_RATE)
+	if (SDL_GetTicks() - TheGame::getInstance()->getTimer() >= FRAME_RATE)
 	{
 
-		TheGame::Instance()->ClearScreen();
+		TheGame::getInstance()->clearScreen();
 
-		TheGame::Instance()->DisplayText("Press (R) to Restart Game", 100, 120, 12, 255, 255, 255, 0, 0, 0);
-		TheGame::Instance()->DisplayText("Press (M) to Return to Main Menu", 100, 140, 12, 255, 255, 255, 0, 0, 0);
-		TheGame::Instance()->DisplayText("Press (C) to Cancel", 100, 160, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::getInstance()->displayText("Press (R) to Restart Game", 100, 120, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::getInstance()->displayText("Press (M) to Return to Main Menu", 100, 140, 12, 255, 255, 255, 0, 0, 0);
+		TheGame::getInstance()->displayText("Press (C) to Cancel", 100, 160, 12, 255, 255, 255, 0, 0, 0);
 
 
-		SDL_UpdateWindowSurface(TheGame::Instance()->GetWindow());
+		SDL_UpdateWindowSurface(TheGame::getInstance()->getWindow());
 
-		TheGame::Instance()->SetTimer(SDL_GetTicks());
+		TheGame::getInstance()->setTimer(SDL_GetTicks());
 
-		HandleInput();
+		handleInput();
 	}
 }

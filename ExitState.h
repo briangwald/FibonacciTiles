@@ -8,9 +8,9 @@ class ExitState : public GameState
 {
 public:
 
-	void HandleInput();
+	void handleInput();
 
-	void RunState();
+	void runState();
 
 private:
 

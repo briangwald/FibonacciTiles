@@ -37,7 +37,7 @@ public:
 	~Game();
 
 	//Ensure singleton instance
-	static Game* Instance()
+	static Game* getInstance()
 	{
 		if (instance == NULL)
 		{
@@ -47,42 +47,42 @@ public:
 	}
 
 	//Initialize SDL utilities, window, sprites, and game state stack
-	void Init();
+	void init();
 
 	//Ends SDL utilities
-	void Shutdown();
+	void shutdown();
 
 	//SDL functions
-	void ClearScreen();
-	void DisplayText(string text, int x, int y, int size, int fR, int fG, int fB, int bR, int bG, int bB);
+	void clearScreen();
+	void displayText(string text, int x, int y, int size, int fR, int fG, int fB, int bR, int bG, int bB);
 
 	//Returns true if a valid move can be made
-	bool CanMove();
+	bool canMove();
 
 	//Moves grid's squares in the given direction
-	void Move(Direction dir);
+	void move(Direction dir);
 
 	//Draws each individual square in Grid
-	void DrawGrid();
+	void drawGrid();
 
-	void ClearGrid();
+	void clearGrid();
 
 	//Sets the value of a random Square on the grid to either a 1 or a 2, effectively
 	//adding a new Square to the grid.
-	void AddRandomSquare();
+	void addRandomSquare();
 
-	SDL_Surface* GetScreenSurface() { return screenSurface; }
-	SDL_Window* GetWindow() { return window; }
+	SDL_Surface* getScreenSurface() { return screenSurface; }
+	SDL_Window* getWindow() { return window; }
 
-	int GetTimer() { return timer; }
-	void SetTimer(int newTimer) 
+	int getTimer() { return timer; }
+	void setTimer(int newTimer) 
 	{ 
 		timer = newTimer; 
 	}
 
 	//TODO: Instead of an accessor, provide methods that operate on
 	//the GameStates stack directly
-	stack<GameState*>* GetGameStates() { return &gameStates; }
+	stack<GameState*>* getGameStates() { return &gameStates; }
 
 private:
 
